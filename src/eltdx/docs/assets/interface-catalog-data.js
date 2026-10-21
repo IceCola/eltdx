@@ -1,5 +1,5 @@
 window.ELTDX_CATALOG = {
-  "schema_version": 14,
+  "schema_version": 15,
   "release": {
     "version": "3.3.0",
     "status": "stable",
@@ -36,6 +36,30 @@ window.ELTDX_CATALOG = {
         "stat_label": "Helpers 封装",
         "description": "23 个 Helpers 封装，组合协议调用、解析、整理和本地计算。",
         "source": "Helper"
+      },
+      {
+        "id": "ex",
+        "label": "扩展行情（7727）",
+        "tag_label": "EX",
+        "stat_label": "扩展行情（7727）",
+        "description": "扩展行情（7727）接口；行情覆盖以服务器实际支持为准。",
+        "source": "EX"
+      },
+      {
+        "id": "mac",
+        "label": "MAC 行情",
+        "tag_label": "MAC",
+        "stat_label": "MAC 行情",
+        "description": "MAC 行情接口；行情覆盖以服务器实际支持为准。",
+        "source": "MAC"
+      },
+      {
+        "id": "macex",
+        "label": "MAC-EX 基金与外盘",
+        "tag_label": "MAC-EX",
+        "stat_label": "MAC-EX 基金与外盘",
+        "description": "MAC-EX 基金与外盘接口；行情覆盖以服务器实际支持为准。",
+        "source": "MAC-EX"
       }
     ],
     "functional_groups": [
@@ -152,6 +176,49 @@ window.ELTDX_CATALOG = {
           "helper-stock-profile",
           "helper-server-download",
           "helper-server-stats"
+        ]
+      },
+      {
+        "id": "ex",
+        "label": "扩展行情（7727）",
+        "description": "扩展行情（7727）的标的、行情和历史数据。",
+        "item_ids": [
+          "ex-markets",
+          "ex-count",
+          "ex-info",
+          "ex-quote",
+          "ex-quotes",
+          "ex-bars",
+          "ex-history-bars",
+          "ex-minute",
+          "ex-history-minute",
+          "ex-trades",
+          "ex-history-trades"
+        ]
+      },
+      {
+        "id": "mac",
+        "label": "MAC 行情",
+        "description": "MAC 行情的标的、行情和历史数据。",
+        "item_ids": [
+          "mac-quotes",
+          "mac-ranking",
+          "mac-bars",
+          "mac-minute",
+          "mac-trades",
+          "mac-boards"
+        ]
+      },
+      {
+        "id": "macex",
+        "label": "MAC-EX 基金与外盘",
+        "description": "MAC-EX 基金与外盘的标的、行情和历史数据。",
+        "item_ids": [
+          "macex-instruments",
+          "macex-quotes",
+          "macex-bars",
+          "macex-trades",
+          "macex-minute"
         ]
       }
     ]
@@ -383,7 +450,14 @@ window.ELTDX_CATALOG = {
       "source": "7709",
       "category": "K 线",
       "api": "client.delisted_bars.get(code, ...)",
-      "aliases": ["delisted_bars.get", "退市", "历史证券", "不复权", "自动分页", "批量"],
+      "aliases": [
+        "delisted_bars.get",
+        "退市",
+        "历史证券",
+        "不复权",
+        "自动分页",
+        "批量"
+      ],
       "protocol": "0x052b",
       "kind": "底层协议",
       "summary": "查询退市股票的不复权日线，支持单只或批量查询、自动分页。",
@@ -1138,7 +1212,11 @@ window.ELTDX_CATALOG = {
       "source": "Helper",
       "category": "证券代码",
       "api": "client.helpers.latest_stock_list(market=None)",
-      "aliases": ["latest_stock_list", "latest_stocks", "A 股列表"],
+      "aliases": [
+        "latest_stock_list",
+        "latest_stocks",
+        "A 股列表"
+      ],
       "protocol": "0x044d",
       "kind": "组合能力",
       "summary": "从当前代码表筛出沪深北 A 股证券，返回最新股票列表。",
@@ -1151,7 +1229,11 @@ window.ELTDX_CATALOG = {
       "source": "Helper",
       "category": "证券代码",
       "api": "client.helpers.latest_st(market=None)",
-      "aliases": ["latest_st", "st", "ST 股票"],
+      "aliases": [
+        "latest_st",
+        "st",
+        "ST 股票"
+      ],
       "protocol": "0x044d",
       "kind": "组合能力",
       "summary": "按代码表证券名称筛选当前 ST、*ST、SST 和 S*ST 股票。",
@@ -1164,7 +1246,11 @@ window.ELTDX_CATALOG = {
       "source": "Helper",
       "category": "证券代码",
       "api": "client.helpers.latest_suspended(market=None)",
-      "aliases": ["latest_suspended", "suspended", "停牌股票"],
+      "aliases": [
+        "latest_suspended",
+        "suspended",
+        "停牌股票"
+      ],
       "protocol": "0x044d + 0x053e",
       "kind": "组合能力",
       "summary": "读取代码表并用 0x053e 交易状态位 0x20 筛出当前停牌股票。",
@@ -1177,7 +1263,11 @@ window.ELTDX_CATALOG = {
       "source": "Helper",
       "category": "集合竞价",
       "api": "client.helpers.daily_share_capital(codes=None)",
-      "aliases": ["daily_share_capital", "daily_shares", "股本"],
+      "aliases": [
+        "daily_share_capital",
+        "daily_shares",
+        "股本"
+      ],
       "protocol": "0x0010 + 0x06b9",
       "kind": "组合能力",
       "summary": "合并财务快照与服务器统计资源，返回总股本、流通股本和自由流通股本。",
@@ -1190,7 +1280,11 @@ window.ELTDX_CATALOG = {
       "source": "Helper",
       "category": "实时行情",
       "api": "client.helpers.daily_price_limits(codes=None, trade_date=...)",
-      "aliases": ["daily_price_limits", "stock_daily_price_limits", "涨跌停"],
+      "aliases": [
+        "daily_price_limits",
+        "stock_daily_price_limits",
+        "涨跌停"
+      ],
       "protocol": "0x054c + 业务规则",
       "kind": "组合能力",
       "summary": "按不复权日线、当日权息和市场板块规则计算当前交易日涨跌停价格。",
@@ -1203,7 +1297,11 @@ window.ELTDX_CATALOG = {
       "source": "Helper",
       "category": "实时行情",
       "api": "client.helpers.realtime_rank(sort_by=\"涨幅\")",
-      "aliases": ["realtime_rank", "stock_realtime_rank", "涨幅榜"],
+      "aliases": [
+        "realtime_rank",
+        "stock_realtime_rank",
+        "涨幅榜"
+      ],
       "protocol": "0x054b",
       "kind": "业务封装",
       "summary": "基于 list_by_category() 的榜单封装：自动分页、补名称并标准化为带排名的实时结果。",
@@ -1216,7 +1314,10 @@ window.ELTDX_CATALOG = {
       "source": "Helper",
       "category": "实时行情",
       "api": "client.helpers.board_quotes(category=\"概念\", refresh=False)",
-      "aliases": ["board_quotes", "板块行情"],
+      "aliases": [
+        "board_quotes",
+        "板块行情"
+      ],
       "protocol": "0x06b9 + 0x044d + 0x054c",
       "kind": "组合能力",
       "summary": "默认读取概念板块资料，也可通过 category 选择其他分类或全部板块；按每批最多 80 个代码取得行情，不自行排序。",
@@ -1229,7 +1330,10 @@ window.ELTDX_CATALOG = {
       "source": "Helper",
       "category": "实时行情",
       "api": "client.helpers.board_member_quotes(board_code, refresh=False)",
-      "aliases": ["board_member_quotes", "板块成分股行情"],
+      "aliases": [
+        "board_member_quotes",
+        "板块成分股行情"
+      ],
       "protocol": "0x06b9 + 0x044d + 0x054c",
       "kind": "组合能力",
       "summary": "按板块代码读取原始成员，用当前 0x044d 证券名单核对有效性，再分批取得成分股行情。",
@@ -1242,7 +1346,10 @@ window.ELTDX_CATALOG = {
       "source": "Helper",
       "category": "实时行情",
       "api": "client.helpers.buy_sell_strength(code)",
-      "aliases": ["buy_sell_strength", "买卖力道"],
+      "aliases": [
+        "buy_sell_strength",
+        "买卖力道"
+      ],
       "protocol": "0x051b",
       "kind": "组合能力",
       "summary": "返回按分钟整理的买卖力道副图序列。",
@@ -1255,7 +1362,10 @@ window.ELTDX_CATALOG = {
       "source": "Helper",
       "category": "实时行情",
       "api": "client.helpers.volume_comparison(code)",
-      "aliases": ["volume_comparison", "成交对比"],
+      "aliases": [
+        "volume_comparison",
+        "成交对比"
+      ],
       "protocol": "0x051b",
       "kind": "组合能力",
       "summary": "返回当前与前一交易日累计成交量对比的分钟副图序列。",
@@ -1268,7 +1378,12 @@ window.ELTDX_CATALOG = {
       "source": "Helper",
       "category": "实时行情",
       "api": "client.helpers.limit_ladder(codes=None)",
-      "aliases": ["limit_ladder", "stock_limit_ladder", "实时涨停", "连板"],
+      "aliases": [
+        "limit_ladder",
+        "stock_limit_ladder",
+        "实时涨停",
+        "连板"
+      ],
       "protocol": "实时快照 + 0x06b9",
       "kind": "组合能力",
       "summary": "从实时短线指标中筛选封板或触板股票，按涨停梯队和封单金额排序。",
@@ -1281,7 +1396,11 @@ window.ELTDX_CATALOG = {
       "source": "Helper",
       "category": "集合竞价",
       "api": "client.helpers.theme_strength_rank(codes=None)",
-      "aliases": ["theme_strength_rank", "stock_theme_strength_rank", "题材强度"],
+      "aliases": [
+        "theme_strength_rank",
+        "stock_theme_strength_rank",
+        "题材强度"
+      ],
       "protocol": "连板天梯 + 7615 F10",
       "kind": "组合能力",
       "summary": "按个股 F10 题材聚合涨停数量、最高板、连板数和封单金额。",
@@ -1418,7 +1537,11 @@ window.ELTDX_CATALOG = {
       "source": "7709",
       "category": "服务器资源",
       "api": "client.resources.block_meta(filename)",
-      "aliases": ["block_meta", "板块文件元数据", "板块文件"],
+      "aliases": [
+        "block_meta",
+        "板块文件元数据",
+        "板块文件"
+      ],
       "protocol": "0x02c5",
       "kind": "底层协议",
       "summary": "查询板块文件在服务器上的字节大小与 MD5 摘要，用于判断本地缓存是否需要更新。",
@@ -1431,7 +1554,11 @@ window.ELTDX_CATALOG = {
       "source": "7709",
       "category": "公司资料",
       "api": "client.company_info.category(code, market)",
-      "aliases": ["company_info_category", "公司信息目录", "F10 目录"],
+      "aliases": [
+        "company_info_category",
+        "公司信息目录",
+        "F10 目录"
+      ],
       "protocol": "0x02cf",
       "kind": "底层协议",
       "summary": "读取证券 F10 公司信息文件的段落目录（名称、文件名、偏移、长度）。",
@@ -1444,12 +1571,390 @@ window.ELTDX_CATALOG = {
       "source": "7709",
       "category": "公司资料",
       "api": "client.company_info.content(code, market, filename, offset, length)",
-      "aliases": ["company_info_content", "公司信息内容", "F10 正文"],
+      "aliases": [
+        "company_info_content",
+        "公司信息内容",
+        "F10 正文"
+      ],
       "protocol": "0x02d0",
       "kind": "底层协议",
       "summary": "按目录读取某只证券 F10 公司信息的一段 GBK 正文。",
       "return_model": "str",
       "doc": "methods/0x02d0-公司信息内容接口.md"
+    },
+    {
+      "id": "ex-markets",
+      "title": "扩展市场表",
+      "source": "EX",
+      "category": "扩展行情（7727）",
+      "api": "ExTdxClient.get_markets()",
+      "aliases": [
+        "ExTdxClient",
+        "扩展行情",
+        "EX"
+      ],
+      "protocol": "7727 / EX",
+      "kind": "独立协议客户端",
+      "summary": "查询市场表；内置主站普遍不回应，市场编号优先参考 ExMarket 枚举。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "ex-count",
+      "title": "扩展标的数量",
+      "source": "EX",
+      "category": "扩展行情（7727）",
+      "api": "ExTdxClient.get_instrument_count()",
+      "aliases": [
+        "ExTdxClient",
+        "扩展行情",
+        "EX"
+      ],
+      "protocol": "7727 / EX",
+      "kind": "独立协议客户端",
+      "summary": "查询全市场标的总数。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "ex-info",
+      "title": "扩展标的代码与名称",
+      "source": "EX",
+      "category": "扩展行情（7727）",
+      "api": "ExTdxClient.get_instrument_info(start, count=100)",
+      "aliases": [
+        "ExTdxClient",
+        "扩展行情",
+        "EX"
+      ],
+      "protocol": "7727 / EX",
+      "kind": "独立协议客户端",
+      "summary": "按全局偏移分页查询扩展市场标的。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "ex-quote",
+      "title": "扩展标的五档报价",
+      "source": "EX",
+      "category": "扩展行情（7727）",
+      "api": "ExTdxClient.get_instrument_quote(market, code)",
+      "aliases": [
+        "ExTdxClient",
+        "扩展行情",
+        "EX"
+      ],
+      "protocol": "7727 / EX",
+      "kind": "独立协议客户端",
+      "summary": "查询单合约五档行情及持仓量；行情可用性取决于服务器。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "ex-quotes",
+      "title": "扩展报价列表",
+      "source": "EX",
+      "category": "扩展行情（7727）",
+      "api": "ExTdxClient.get_instrument_quote_list(market, category, start=0, count=80)",
+      "aliases": [
+        "ExTdxClient",
+        "扩展行情",
+        "EX"
+      ],
+      "protocol": "7727 / EX",
+      "kind": "独立协议客户端",
+      "summary": "按市场和分类分页查询报价。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "ex-bars",
+      "title": "扩展行情 K 线",
+      "source": "EX",
+      "category": "扩展行情（7727）",
+      "api": "ExTdxClient.get_instrument_bars(category, market, code, ...)",
+      "aliases": [
+        "ExTdxClient",
+        "扩展行情",
+        "EX"
+      ],
+      "protocol": "7727 / EX",
+      "kind": "独立协议客户端",
+      "summary": "查询周期 K 线，支持 bar_time 起点或右端点时间。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "ex-history-bars",
+      "title": "扩展历史区间 K 线",
+      "source": "EX",
+      "category": "扩展行情（7727）",
+      "api": "ExTdxClient.get_history_instrument_bars_range(market, code, start_date, end_date)",
+      "aliases": [
+        "ExTdxClient",
+        "扩展行情",
+        "EX"
+      ],
+      "protocol": "7727 / EX",
+      "kind": "独立协议客户端",
+      "summary": "按日期区间查询历史 K 线。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "ex-minute",
+      "title": "扩展当日分时",
+      "source": "EX",
+      "category": "扩展行情（7727）",
+      "api": "ExTdxClient.get_minute_time_data(market, code)",
+      "aliases": [
+        "ExTdxClient",
+        "扩展行情",
+        "EX"
+      ],
+      "protocol": "7727 / EX",
+      "kind": "独立协议客户端",
+      "summary": "查询扩展标的当日分时。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "ex-history-minute",
+      "title": "扩展历史分时",
+      "source": "EX",
+      "category": "扩展行情（7727）",
+      "api": "ExTdxClient.get_history_minute_time_data(market, code, date)",
+      "aliases": [
+        "ExTdxClient",
+        "扩展行情",
+        "EX"
+      ],
+      "protocol": "7727 / EX",
+      "kind": "独立协议客户端",
+      "summary": "查询指定日期分时。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "ex-trades",
+      "title": "扩展当日成交",
+      "source": "EX",
+      "category": "扩展行情（7727）",
+      "api": "ExTdxClient.get_transaction_data(market, code, ...)",
+      "aliases": [
+        "ExTdxClient",
+        "扩展行情",
+        "EX"
+      ],
+      "protocol": "7727 / EX",
+      "kind": "独立协议客户端",
+      "summary": "查询当日逐笔成交。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "ex-history-trades",
+      "title": "扩展历史成交",
+      "source": "EX",
+      "category": "扩展行情（7727）",
+      "api": "ExTdxClient.get_history_transaction_data(market, code, date, ...)",
+      "aliases": [
+        "ExTdxClient",
+        "扩展行情",
+        "EX"
+      ],
+      "protocol": "7727 / EX",
+      "kind": "独立协议客户端",
+      "summary": "查询历史逐笔成交；港股支持自动分页。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "mac-quotes",
+      "title": "MAC 批量报价",
+      "source": "MAC",
+      "category": "MAC 行情",
+      "api": "MacClient.get_stock_quotes(stocks)",
+      "aliases": [
+        "MacClient",
+        "扩展行情",
+        "MAC"
+      ],
+      "protocol": "MAC / 7709",
+      "kind": "独立协议客户端",
+      "summary": "按字段位图读取批量行情。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "mac-ranking",
+      "title": "MAC 分类排行",
+      "source": "MAC",
+      "category": "MAC 行情",
+      "api": "MacClient.get_stock_quotes_list(...)",
+      "aliases": [
+        "MacClient",
+        "扩展行情",
+        "MAC"
+      ],
+      "protocol": "MAC / 7709",
+      "kind": "独立协议客户端",
+      "summary": "读取分类排行报价。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "mac-bars",
+      "title": "MAC 复权 K 线",
+      "source": "MAC",
+      "category": "MAC 行情",
+      "api": "MacClient.get_stock_kline(market, code, ...)",
+      "aliases": [
+        "MacClient",
+        "扩展行情",
+        "MAC"
+      ],
+      "protocol": "MAC / 7709",
+      "kind": "独立协议客户端",
+      "summary": "查询多周期 K 线及复权数据。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "mac-minute",
+      "title": "MAC 分时",
+      "source": "MAC",
+      "category": "MAC 行情",
+      "api": "MacClient.get_stock_minute_time(...)",
+      "aliases": [
+        "MacClient",
+        "扩展行情",
+        "MAC"
+      ],
+      "protocol": "MAC / 7709",
+      "kind": "独立协议客户端",
+      "summary": "查询当日分时；历史入口见方法文档。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "mac-trades",
+      "title": "MAC 逐笔成交",
+      "source": "MAC",
+      "category": "MAC 行情",
+      "api": "MacClient.get_stock_transaction(...)",
+      "aliases": [
+        "MacClient",
+        "扩展行情",
+        "MAC"
+      ],
+      "protocol": "MAC / 7709",
+      "kind": "独立协议客户端",
+      "summary": "读取逐笔成交数据。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "mac-boards",
+      "title": "MAC 板块列表",
+      "source": "MAC",
+      "category": "MAC 行情",
+      "api": "MacClient.get_board_list()",
+      "aliases": [
+        "MacClient",
+        "扩展行情",
+        "MAC"
+      ],
+      "protocol": "MAC / 7709",
+      "kind": "独立协议客户端",
+      "summary": "读取板块列表；板块汇总、排行和成分股见方法文档。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "macex-instruments",
+      "title": "基金与外盘标的",
+      "source": "MAC-EX",
+      "category": "MAC-EX 基金与外盘",
+      "api": "MacExClient.instruments(market, start=0, count=600)",
+      "aliases": [
+        "MacExClient",
+        "扩展行情",
+        "MAC-EX"
+      ],
+      "protocol": "MAC-EX / 7727",
+      "kind": "独立协议客户端",
+      "summary": "枚举标的代码与名称，支持基金、港股及外盘等市场。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "macex-quotes",
+      "title": "基金净值与外盘报价",
+      "source": "MAC-EX",
+      "category": "MAC-EX 基金与外盘",
+      "api": "MacExClient.goods_quotes(stocks)",
+      "aliases": [
+        "MacExClient",
+        "扩展行情",
+        "MAC-EX"
+      ],
+      "protocol": "MAC-EX / 7727",
+      "kind": "独立协议客户端",
+      "summary": "查询批量净值或报价，支持场外基金等扩展市场。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "macex-bars",
+      "title": "基金与外盘 K 线",
+      "source": "MAC-EX",
+      "category": "MAC-EX 基金与外盘",
+      "api": "MacExClient.goods_kline(market, code, ...)",
+      "aliases": [
+        "MacExClient",
+        "扩展行情",
+        "MAC-EX"
+      ],
+      "protocol": "MAC-EX / 7727",
+      "kind": "独立协议客户端",
+      "summary": "查询扩展标的 K 线，支持复权。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "macex-trades",
+      "title": "MAC-EX 逐笔成交",
+      "source": "MAC-EX",
+      "category": "MAC-EX 基金与外盘",
+      "api": "MacExClient.goods_transaction(market, code, ...)",
+      "aliases": [
+        "MacExClient",
+        "扩展行情",
+        "MAC-EX"
+      ],
+      "protocol": "MAC-EX / 7727",
+      "kind": "独立协议客户端",
+      "summary": "查询扩展市场逐笔成交。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
+    },
+    {
+      "id": "macex-minute",
+      "title": "MAC-EX 分时",
+      "source": "MAC-EX",
+      "category": "MAC-EX 基金与外盘",
+      "api": "MacExClient.goods_tick_chart(market, code, ...)",
+      "aliases": [
+        "MacExClient",
+        "扩展行情",
+        "MAC-EX"
+      ],
+      "protocol": "MAC-EX / 7727",
+      "kind": "独立协议客户端",
+      "summary": "查询扩展市场分时数据。",
+      "return_model": "见方法文档",
+      "doc": "EXTENDED_MARKET.md"
     }
   ]
 };
