@@ -94,7 +94,7 @@ eltdx limits sz000001 --date 20261009
 
 | 命令 | 说明 |
 | --- | --- |
-| `ex markets` | 市场表（服务端普遍不支持，自动回退本地 `ExMarket` 枚举） |
+| `ex markets [--probe-server]` | 默认显示本地 `ExMarket` 市场表；添加 `--probe-server` 才查询服务器，不支持时回退本地枚举 |
 | `ex count [--market N]` | 全市场标的数 / 某市场标的数 |
 | `ex info [--start] [--count]` | 按全局偏移分页取标的 |
 | `ex quote --market N CODE` | 单合约行情 |
