@@ -18,8 +18,7 @@ from scripts.verification.verify_release_artifacts import verify_artifacts
 
 TARGET_CARGO_VERSION = "3.3.0"
 TARGET_PYTHON_VERSION = "3.3.0"
-# The v3.0.5 banner is intentionally reused for this release.
-BANNER_KEYWORD = b"eltdx_release\x00" + b"3.0.5"
+BANNER_KEYWORD = b"eltdx_release\x00" + TARGET_PYTHON_VERSION.encode("ascii")
 
 
 def _cargo_version() -> str:
@@ -58,8 +57,12 @@ def _png_text_chunks(path: Path) -> list[bytes]:
 def _mirror_errors() -> list[str]:
     source = ROOT / "docs"
     mirror = ROOT / "src" / "eltdx" / "docs"
-    source_files = {path.relative_to(source): path for path in source.rglob("*") if path.is_file()}
-    mirror_files = {path.relative_to(mirror): path for path in mirror.rglob("*") if path.is_file()}
+    source_files = {
+        path.relative_to(source): path for path in source.rglob("*") if path.is_file()
+    }
+    mirror_files = {
+        path.relative_to(mirror): path for path in mirror.rglob("*") if path.is_file()
+    }
     errors = []
     if set(source_files) != set(mirror_files):
         errors.append("package docs mirror file inventory differs from root docs")
@@ -79,12 +82,18 @@ def check(
 ) -> list[str]:
     errors: list[str] = []
     cargo = _cargo_version()
-    if cargo != TARGET_CARGO_VERSION or _normalize_cargo(cargo) != TARGET_PYTHON_VERSION:
+    if (
+        cargo != TARGET_CARGO_VERSION
+        or _normalize_cargo(cargo) != TARGET_PYTHON_VERSION
+    ):
         errors.append(f"Cargo/Python target version mismatch: {cargo}")
     pyproject = (ROOT / "pyproject.toml").read_text(encoding="utf-8")
-    if 'dynamic = ["version"]' not in pyproject or 'module-name = "eltdx._native"' not in pyproject:
+    if (
+        'dynamic = ["version"]' not in pyproject
+        or 'module-name = "eltdx._native"' not in pyproject
+    ):
         errors.append("pyproject does not use dynamic native package versioning")
-    if 'Development Status :: 5 - Production/Stable' not in pyproject:
+    if "Development Status :: 5 - Production/Stable" not in pyproject:
         errors.append("pyproject does not classify the release as production/stable")
     required = {
         "README.md": TARGET_PYTHON_VERSION,
@@ -96,9 +105,11 @@ def check(
     for relative, needle in required.items():
         if needle not in (ROOT / relative).read_text(encoding="utf-8"):
             errors.append(f"{relative} does not contain {needle!r}")
-    banner = ROOT / ".github" / "assets" / "eltdx-readme-banner-v3.0.5.png"
+    banner = ROOT / ".github" / "assets" / "eltdx-readme-banner-v3.3.0.png"
     if BANNER_KEYWORD not in _png_text_chunks(banner):
-        errors.append(f"README banner lacks eltdx_release={TARGET_PYTHON_VERSION} PNG metadata")
+        errors.append(
+            f"README banner lacks eltdx_release={TARGET_PYTHON_VERSION} PNG metadata"
+        )
     errors.extend(_mirror_errors())
     release_values = (artifact_dir, ref, sha)
     if any(value is not None for value in release_values):
@@ -107,14 +118,18 @@ def check(
         else:
             expected_ref = f"refs/tags/v{TARGET_PYTHON_VERSION}"
             if ref != expected_ref and not allow_dry_run_ref:
-                errors.append(f"release ref differs: expected {expected_ref!r}, got {ref!r}")
+                errors.append(
+                    f"release ref differs: expected {expected_ref!r}, got {ref!r}"
+                )
             try:
                 inventory = verify_artifacts(artifact_dir, candidate=sha)
             except (FileNotFoundError, RuntimeError, ValueError) as error:
                 errors.append(f"release artifact verification failed: {error}")
             else:
                 if inventory["version"] != TARGET_PYTHON_VERSION:
-                    errors.append(f"release artifact version differs: {inventory['version']!r}")
+                    errors.append(
+                        f"release artifact version differs: {inventory['version']!r}"
+                    )
     return errors
 
 

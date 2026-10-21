@@ -19,7 +19,7 @@
 </p>
 
 <a href="https://electkismet.github.io/eltdx/">
-  <img alt="eltdx 接口目录预览" src=".github/assets/eltdx-readme-banner-v3.0.5.png">
+  <img alt="eltdx 接口目录预览" src=".github/assets/eltdx-readme-banner-v3.3.0.png">
 </a>
 
 <p align="center">
@@ -30,9 +30,7 @@
 
 > 如果需要多数据源可以关注新项目 [AxData](https://github.com/electkismet/AxData)：AxData 基于 eltdx 迭代开发，除通达信体系外，AxData 还通过插件机制整理接入交易所、巨潮、腾讯财经、新浪财经、东方财富、财联社、开盘红等公开源接口，并扩展了自由流通市值、开盘换手、开盘量比、开盘抢筹、竞价昨比、连板天梯、题材强度等更适合本地量化研究和短线数据分析的指标能力，但如果是用单一源的话，仍推荐eltdx，受制于架构axdata性能不如裸协议路径的eltdx。
 
-通达信在线行情协议 Python 库。可以拿 A 股的行情、分时、成交明细、K 线、竞价、公司信息、题材信息等信息，支持 MCP 工具。`3.0` 保留现有 Python API 和返回模型，将 21 个 7709 命令的构包、解析、连接池、pin、push、心跳和关闭核心统一迁入 Rust。
-
-> `v2.0.0` 移除 `TdxClient` 的旧版扁平旧版入口，统一使用模块化 API 和 Helpers。升级前请阅读 [v2.0.0 迁移说明](docs/releases/v2.0.0.md)。
+通达信行情与数据 Python 库。支持 A 股行情、分时、成交明细、K 线、竞价、公司信息和题材信息；提供扩展行情（EX）、MAC / MAC-EX、基金与外盘相关接口，以及本地行情文件和专业财务数据读取能力。7709 协议核心由 Rust 实现，支持 MCP 工具和 HTTP 网关。各行情接口的数据覆盖以服务器实际支持为准。
 
 1. 本项目仅以个人学习、协议兼容性与数据解析研究为目的进行开发。
 2. 项目本身、衍生产品及通过本项目获取的数据禁止用于任何商业行为、付费服务、生产服务、转售或其他营利用途，产生的任何数据、损失或法律责任由使用者自负。
@@ -90,7 +88,7 @@ eltdx 默认按“想拿什么数据”组织入口。普通调用优先使用�
 pip install eltdx
 ```
 
-`3.0` 为 CPython 3.10-3.14 提供 Windows x64、manylinux x64/ARM64、macOS x64/ARM64 五个 `cp310-abi3` wheel。匹配 wheel 时不需要安装 Rust。没有匹配 wheel 的平台会尝试从 sdist 编译，需要 Rust 1.89 工具链；3.0 不提供纯 Python 7709 fallback。PyPy、free-threaded CPython、musllinux 和其他未列出的组合不在首发支持范围。
+为 CPython 3.10-3.14 提供 Windows x64、manylinux x64/ARM64、macOS x64/ARM64 五个 `cp310-abi3` wheel。匹配 wheel 时不需要安装 Rust。没有匹配 wheel 的平台会尝试从 sdist 编译，需要 Rust 1.89 工具链；不提供纯 Python 7709 fallback。PyPy、free-threaded CPython、musllinux 和其他未列出的组合不在当前支持范围。
 
 如果需要启动 MCP stdio 工具服务，安装可选依赖：
 
